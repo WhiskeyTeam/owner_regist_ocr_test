@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+<form>
+    <label>
+        <input type="text" placeholder="사업자등록번호" id="registNo">
+    </label>
+    <button type="submit" id="btnbtn">test</button>
+    <small id="ownerValid"></small>
+</form>
+
+<script>
+    var checkResult = "";
+    document.getElementById('btnbtn').addEventListener('click', function(event) { // function() 안의 event 와
+        event.preventDefault();                                                   // event.preventDefault(); 가 없으면 페이지의 reload가 진행되어 정상 작동이 되지 않는다.
+
+    var check = document.getElementById('registNo').value;
+
+    var date = {
+        "b_no": [check]
+    };
+
+        $.ajax({
+            url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=CWF%2BkFNyHElSTXq6Scehihm1oOVcQc%2Fa1zi8YhN5rksJCttOEMjxJNunMP0%2Fjuqlxm0MRuRlI7WTgckWd2O1DA%3D%3D",  // serviceKey 값을 xxxxxx에 입력
+            type: "POST",
+            data: JSON.stringify(date), // json 을 string으로 변환하여 전송
+            dataType: "JSON",
+            contentType: "application/json",
+            accept: "application/json",
+            success: function (result) {
+                console.log(result);
+
+                if (result.data && result.data.length > 0) {
+                    var validResult = result.data[0].b_stt_cd;
+                    console.log('b_stt_cd:', validResult);
+
+                    // 'b_stt_cd' 값을 사용하거나 다른 작업 수행을 위해 추출 (01이 아니면 등록 거절)
+                    alert('b_stt_cd: ' + validResult);
+                    checkResult = validResult;
+                } else {
+                    console.log('No data found in the response.');
+                }
+            },
+            error: function (result) {
+                console.log(result.responseText);
+            }
+        });
+    });
+</script>
+</body>
+</html>

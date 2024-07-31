@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: owenr-regist-test
+logging:
+  level:
+    root: info
+    dev.doka: debug

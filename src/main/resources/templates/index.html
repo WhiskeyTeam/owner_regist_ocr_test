@@ -3,6 +3,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Test</title>
 </head>
@@ -16,6 +17,7 @@
     <small id="ownerValid"></small>
 </form>
 
+<!-- API 호출 스크립트 -->
 <script>
     var checkResult = "";
     document.getElementById('btnbtn').addEventListener('click', function(event) { // function() 안의 event 와
@@ -54,5 +56,51 @@
         });
     });
 </script>
+
+
+
+
+<!--
+&lt;!&ndash; 파일을 서버에 업로드해서 OCR로 보내기 위한 폼 태그 &ndash;&gt;
+<form id="upload"  method="post" enctype="multipart/form-data">
+    <label for="fileInput">Choose image file:</label>
+    <input type="file" id="fileInput" name="file" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+
+
+
+&lt;!&ndash; OCR 호출 스크립트 &ndash;&gt;
+<script>
+    document.getElementById('sendRequest').addEventListener('click', () => {
+    const url = 'https://clovaocr-api-kr.ncloud.com/external/v1/32965/ae43fa0909815a39a619576aff03b94bee51207695cf6066e9bf13e609f28081'; // 실제 API 경로로 변경
+    const apiKey = 'rsyrxg1gz7'; // 실제 API 키로 변경
+    const secretKey = 'aWlwY2NUcklodXFOb0FjUXF6bm1UYWJEV2xnU0FoSWg='; // 실제 비밀 키로 변경
+
+    const data = {
+    key1: 'value1',
+    key2: 'value2'
+};
+
+    fetch(url, {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    'x-ncp-apigw-api-key': apiKey,
+    'X-OCR-SECRET': secretKey
+},
+    body: JSON.stringify(data)
+})
+    .then(response => response.json())
+    .then(data => {
+    console.log('Success:', data);
+})
+    .catch(error => {
+    console.error('Error:', error);
+});
+});
+</script>
+-->
+
 </body>
 </html>
